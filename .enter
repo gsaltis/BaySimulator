@@ -1,0 +1,4 @@
+alias b="./baysim -D BayConfig.txt -l -L Web/CANMon.log -w Web -v"
+alias m=make
+export PS1="BaySim : "
+
