@@ -1,0 +1,63 @@
+.BayName {
+    position                    : absolute;
+    left                        : 0px;
+    right                       : 0px;
+    top                         : 0px;
+    height                      : 24px;
+    text-align                  : center;
+    font-family                 : Segoe UI;
+    font-size                   : 12pt;
+    font-weight                 : bold;
+    color                       : black;
+    background                  : linear-gradient(0deg, #FFFFFF80, #FFFFFF00);
+    line-height                 : 20px;
+    vertical-align              : middle;
+    user-select                 : none;
+}
+
+.Bay {
+    position            	: absolute;
+    border-style        	: solid;
+    border-top-left-radius      : 8px;
+    border-top-right-radius     : 4px;
+    border-width                : 2px;
+    border-color                : #AAA;
+    padding                     : 0 0 0 0;
+    margin                      : 0 0 0 0;
+    box-shadow                  : 15px 15px 15px #00000080;
+}
+
+.BaySize {
+    width                       : 144px;
+    height                      : 504px;
+}
+
+.BaySelected {
+    background          	: linear-gradient(to bottom, #BBA, #FFD);
+}
+
+.BayUnSelected {
+    background          	: linear-gradient(to bottom, #AFAFAF, #CFCFCF);
+}
+
+.BayEditAllButton {
+    background			: #FFFFFF00;
+    position			: absolute;
+    width			: 15px;
+    top				: 2px;
+    height			: 18px;
+    right			: 2px;
+    position			: absolute;
+}
+
+.BayEditBox {
+    background			: linear-gradient(to bottom, #BBA, #FFD);
+    position			: absolute;
+    width			: 220px;
+    height			: 400px;
+    top				: 62px;
+    left			: 173px;
+    z-index			: 100;
+    visibility			: hidden;
+}
+

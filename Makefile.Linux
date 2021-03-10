@@ -1,0 +1,64 @@
+CC		        = gcc
+
+LINK			= gcc
+
+CC_FLAGS		+= -Wall -g -c -I. -DNEED_LOCAL_HTTP_SERVER -DHAVE_BCM
+
+LINK_FLAGS		+= -g
+
+TARGET			= baysim
+
+PLATFORM		= Platforms/Linux
+
+LIBS			+= -lmongoose -lsqlite3 -ljson -lm -lpthread -lrt -lutils
+
+OBJS			= $(sort				\
+			    BayType.o				\
+			    CANIOThread.o			\
+			    CANInterface.o			\
+			    CLIThread.o				\
+			    DSMType.o				\
+			    DataFile.o                          \
+			    DeviceFile.o			\
+			    ESNACANInterface.o			\
+			    ESNACANMessageQueue.o		\
+			    ESNACANNodeType.o			\
+			    ESNACANPacket.o			\
+			    HTTPServerThread.o			\
+			    Mutex.o				\
+			    NodeDataStore.o			\
+			    NodeManagerThread.o			\
+			    ProcessInputMessageThread.o		\
+			    RectifierType.o			\
+			    SIMThread.o				\
+			    ShuntType.o				\
+			    Simulator.o				\
+			    System.o				\
+			    SystemTime.o			\
+			    Thread.o				\
+			    Version.o				\
+		  	    NodeType.o				\
+                            BayFile.o                           \
+                            DeviceInterface.o                   \
+			    main.o				\
+			   )
+
+$(TARGET)		: $(OBJS)
+			  @echo [LD] $@
+			  @$(LINK) $(LINK_FLAGS) -o $@ $(OBJS) $(LIBS)
+
+%.o			: $(PLATFORM)/%.c
+			  @echo [CC] $@
+			  @$(CC) $(CC_FLAGS) $<
+
+%.o			: %.c
+			  @echo [CC] $@
+			  @$(CC) $(CC_FLAGS) $<
+
+clean			:
+			  rm -rf $(wildcard *~ *.o $(TARGET) lib/*.o lib/*.a)
+
+junkclean		:
+			  rm -rf $(wildcard *~ Web/*~ Web/css/*~ Web/js/*~)
+
+include			  depends.mk

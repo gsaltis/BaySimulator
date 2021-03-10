@@ -1,0 +1,17 @@
+#!/bin/bash
+if [ -e /dev/ttyUSB0 ];
+then
+  sudo slcand -o -c -f -s6 /dev/ttyUSB0 slcan0;
+  echo "Starting slcan0 on ttyUSB0";
+  sleep 2
+  sudo ifconfig slcan0 up
+elif [ -e /dev/ttyUSB1 ];
+then
+  sudo slcand -o -c -f -s6 /dev/ttyUSB1 slcan0;
+  echo "Starting slcan0 on ttyUSB1";
+  sleep 2
+  sudo ifconfig slcan0 up
+else
+  echo "Could not find a ttyUSB device in /dev"
+fi
+

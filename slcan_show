@@ -1,0 +1,12 @@
+#!/bin/bash
+canname=`ps aux | grep slcand | grep -v grep | awk '{ print $NF; }'`
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+if [ "" == "$canname" ]; then
+  echo CAN driver not running
+else
+  echo -e CAN driver ${YELLOW}${canname}${NC} found
+fi
+

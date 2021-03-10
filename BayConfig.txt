@@ -1,0 +1,50 @@
+bay add Supplemental 2
+bay set name "Bay 2"
+rect add 1
+rect set serial 1 800506201
+rect set current 1 32
+rect on 1
+rect add 2
+rect set serial 2 800506202
+rect set current 2 32
+rect on 2
+rect add 3
+rect set serial 3 800506203
+rect set current 3 32
+rect on 3
+rect add 4
+rect set serial 4 800506204
+rect set current 4 32
+rect on 4
+rect add 5
+rect set serial 5 800506205
+rect set current 5 32
+rect on 5
+rect add 6
+rect set serial 6 800506206
+rect set current 6 32
+rect on 6
+rect add 7
+rect set serial 7 800506207
+rect set current 7 32
+rect on 7
+rect add 8
+rect set serial 8 800506208
+rect set current 8 32
+rect on 8
+rect add 9
+rect set serial 9 800506209
+rect set current 9 32
+rect on 9
+rect add 10
+rect set serial 10 800506210
+rect set current 10 32
+rect on 10
+dsm add 1
+dsm set serial 1 800506221
+dist add 1 1 breaker 2 200
+dist add 1 3 breaker 1 100
+dsm add 2
+dsm set serial 2 800506222
+dist add 2 1 breaker 2 200
+dist add 2 3 breaker 1 100

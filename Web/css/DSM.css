@@ -1,0 +1,47 @@
+.DSM {
+    position            	: absolute;
+    top                         : 30px;
+    left                        : 0px;
+    border-style        	: solid;
+    border-width                : 2px;
+    background                  : linear-gradient(135deg, #016c40, #08995e);
+    width                       : 142px;
+    height                      : 102;
+    border-color                : #000000;
+}
+
+.DSMSelected  {
+    border-color : #A00000;
+    border-width : 1px;
+    left         : 0px;
+    background                  : linear-gradient(225deg, #013c70, #08998e);
+}
+
+.DSMUnSelected {
+    border-color : #000000;
+    border-width : 1px;
+    left         : 0px;
+    background                  : linear-gradient(135deg, #016c40, #08995e);
+}
+
+.DSMEditContactLabel {
+    position			: absolute;
+    top 			: 120px;
+    left			: 5px;
+    width 			: 130px;
+    text-align			: right;
+    height			: 20px;
+    font-weight			: bold;
+}
+
+.DSMEditContactValue {
+    position			: absolute;
+    top				: 120px;
+    left			: 145px;
+    right			: 5px;
+    height			: 17px;
+    color			: white;
+    padding-left		: 2px;
+    background			: #00000080;
+    padding-bottom		: 4px;
+}

@@ -1,0 +1,509 @@
+body {
+    background                  : linear-gradient(27deg,  #151515 5px,  transparent 5px) 0 5px,
+                                  linear-gradient(207deg, #151515 5px,  transparent 5px) 10px 0px,
+                                  linear-gradient(27deg,  #222    5px,  transparent 5px) 0px 10px,
+                                  linear-gradient(207deg, #222    5px,  transparent 5px) 10px 5px,
+                                  linear-gradient(90deg,  #1b1b1b 10px, transparent 10px),
+                                  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color            : #131313;
+    background-size             : 20px 20px;
+}
+
+#FullMenuBar {
+    position                    : absolute;
+    left                        : 0px;
+    right                       : 0px;
+    top                         : 0px;
+    height                      : 70px;
+}
+
+.Rectifier {
+    position                    : absolute;
+    background                  : linear-gradient(to bottom, #DDD, #FFF);
+    border-style        	: solid;
+}
+
+.RectifierSelected {
+    border-color                : #C00;
+    border-width                : 2px;
+}
+
+.RectifierUnSelected {
+    border-color                : black;
+    border-width                : 1px;
+}
+
+#ModeBlock {
+    position                    : absolute;
+    left                        : 0px;
+    right                       : 0px;
+    top                         : 0px;
+    bottom                      : 0px;
+    background                  : #00000020;
+    visibility                  : hidden;
+}
+
+.MenuEntry:hover {
+    color                       : #FFFFFF50;
+}
+
+.MenuEntry {
+    position                    : absolute;
+    top                         : 1px;
+    font-family                 : Segoe UI;
+    font-size                   : 10pt;
+    font-weight                 : bold;
+    height                      : 18px;
+    cursor                      : hand;
+    padding-left                : 5px;
+    padding-right               : 5px;
+    user-select                 : none;
+    background                  : #FFFFFF80;
+    text-align                  : right;
+}
+
+.MenuInput {
+    position                    : absolute;
+    top                         : 1px;
+    font-family                 : Segoe UI;
+    font-size                   : 10pt;
+    font-weight                 : bold;
+    height                      : 17px;
+    cursor                      : hand;
+    border-right                : solid 1px #CCC;
+    border-bottom               : solid 1px #FFF;
+    border-top                  : solid 1px #FFF;
+    padding-right               : 5px;
+    user-select                 : none;
+}
+
+.MenuEntrySimRunning {
+    color                       : white;
+    background                  : #080;
+}
+
+.MessageArea {
+    color                       : black;
+    background                  : #777777;
+    position                    : absolute;
+    left                        : 5px;
+    height                      : 17px;
+    bottom                      : 5px;
+    right                       : 5px;
+    font-family                 : Segoe UI;
+    font-size                   : 10pt;
+    font-weight                 : bold;
+    border                      : solid 1px black;
+    padding-left                : 6px;
+}
+
+.MessageWarning {
+    color                       : #F84;
+}
+
+.MessageAlarm {
+    color                       : #C00;
+}
+
+.MenuBar {
+    position                    : absolute;
+    top                         : 5px;
+    height                      : 18px;
+    left                        : 5px;
+    right                       : 5px;
+    border-width                : 1px;
+    border-style                : solid;
+    border-color                : black;
+    background          	: linear-gradient(180deg, #88888880, #66666680);
+}
+
+#ContactBar {
+    position                    : absolute;
+    left                        : 5px;
+    top                         : 25px;
+    right                       : 5px;
+    height                      : 45px;
+    background          	: linear-gradient(180deg, #66666680, #88888880);
+}
+
+#ContactBarDraw {
+    position                    : absolute;
+    left                        : 0px;
+    top                         : 14px;
+    width                       : 350px;
+    bottom                      : 0px;
+}
+
+.ContactBarSectionHeader {
+    position                    : absolute;
+    left                        : 5px;
+    top                         : 2px;
+    font-family                 : Segoe UI;
+    font-size                   : 8pt;
+    font-weight                 : bold;
+    color                       : #FFFFFF80;
+}
+
+.MainWindow {
+    position            	: absolute;
+    left                	: 5px;
+    right               	: 5px;
+    top                 	: 75px;
+    bottom              	: 25px;
+    background          	: linear-gradient(180deg, #88888880, #44444400);
+    border-width        	: 1px;
+    border-style        	: ridge;
+    border-color        	: #000;
+}
+
+#CANWindow {
+    position            	: absolute;
+    width                	: 495px;
+    right               	: 5px;
+    top                 	: 70px;
+    bottom              	: 25px;
+    background          	: linear-gradient(135deg, #FFFFFFFF, #888888FF);
+    border-width        	: 1px;
+    border-style        	: ridge;
+    border-color        	: #000;
+    visibility                  : hidden;
+}
+
+#CANWindowMenuBar {
+    position                    : absolute;
+    top                         : 0px;
+    left                        : 0px;
+    right                       : 0px;
+    height                      : 20px;
+    background                  : chocolate;
+}
+
+.CANWindowMenuButton {
+    position                    : absolute;
+    top                         : 1px;
+    height                      : 18px;
+    width                       : 18px;
+    background                  : #FFFFFF00;
+    border-top border-left      : #888888;
+    border-bottom border-right  : #333333;
+    border-width                : 1;
+    cursor                      : hand;
+}
+
+.CANWindowMenuButtonDraw {
+    cursor                      : hand;
+}
+
+.EditBoxButton {
+    background                  : #A77000;
+    border                      : 2px solid #6c4902;
+    cursor                      : hand;
+}
+
+.EditBoxButton:hover {
+    border                      : 2px solid rgb(140, 82, 0);
+}
+
+.DSMVertical {
+    position            	: absolute;
+    top                         : 30px;
+    left                        : 0px;
+    border-style        	: solid;
+    border-width                : 1px;
+    background                  : linear-gradient(135deg, #016c40, #08995e);
+    width                       : 72px;
+    height                      : 204;
+}
+
+.DSMContact {
+    position                    : absolute;
+    width                       : 6;
+    height                      : 20;
+    background                  : black;
+    border                      : solid 1px #444
+}
+
+.DSMVerticalContact {
+    position                    : absolute;
+    width                       : 20;
+    height                      : 6;
+    background                  : black;
+    border                      : solid 1px #444
+}
+
+#SubMenuAddBay {
+    position                    : absolute;
+    top                         : 27px;
+    left                        : 115px;
+    width                       : 200px;
+    height                      : 70px;
+    border-bottom               : solid 1px black;
+    border-right                : solid 1px black;
+    border-left                 : solid 1px black;
+    background                  : white;
+}
+
+.SubMenuEntry {
+    position                    : absolute;
+    top                         : 5px;
+    left                        : 5px;
+    height                      : 10px;
+    font-size                   : 10pt;
+    font-weight                 : bold;
+    color                       : #666;
+    font-family                 : Segoe UI;
+    cursor                      : hand;
+    user-select                 : none;
+}
+
+.SubMenuEntry:hover {
+    color                       : blue;
+}
+
+#RectifierEdit {
+    position                    : absolute;
+    width                       : 400;
+    height                      : 300;
+    top                         : 40;
+    left                        : 200;
+    visibility                  : hidden;
+    background                  : white;
+    border                      : solid 1px #CCC;
+    padding                     : 0 0 0 0;
+    margin                      : 0 0 0 0;
+    box-shadow                  : 5px 5px 5px #00000030;
+}
+
+#DSMEdit {
+    width                       : 630;
+    height                      : 500;
+    top                         : 40;
+    left                        : 201;
+    position                    : absolute;
+    visibility                  : hidden;
+    background          	: linear-gradient(180deg, #CC6900, #553400);
+    border                      : solid 1px #CCC;
+    padding                     : 0 0 0 0;
+    margin                      : 0 0 0 0;
+}
+
+.Title {
+    position                    : absolute;
+    background                  : #DDDDDD80;
+    color                       : #000;
+    left                        : 0px;
+    top                         : 0px;
+    right                       : 0px;
+    height                      : 30px;
+    border-bottom               : solid 1px black;
+    font-family                 : Segoe UI;
+    font-weight                 : bold;
+    font-size                   : 15pt;
+    text-align                  : center;
+    line-height                 : 30px;
+    vertical-align              : middle;
+    user-select                 : none;
+}
+
+.EditLabel {
+    position                    : absolute;
+    color                       : black;
+    font-family                 : Segoe UI;
+    font-size                   : 10pt;
+    font-weight                 : bold;
+    width                       : 190px;
+    height                      : 20;
+    text-align                  : right;
+    padding                     : 0 0 0 0;
+    margin                      : 0 0 0 0;
+    user-select                 : none;
+}
+
+.AlarmLabel {
+    color                       : black;
+    font-family                 : Segoe UI;
+    font-size                   : 7pt;
+    font-weight                 : bold;
+    right                       : 30px;
+    height                      : 10px;
+    text-align                  : right;
+    left                        : 10px;
+    user-select                 : none;
+}
+
+.AlarmHeading {
+    font-size                   : 10pt;
+    text-align                  : center;
+    background                  : linear-gradient(180deg, #00000000 15%, #00000000);
+    user-select                 : none;
+}
+
+.EditInput {
+    position                    : absolute;
+    color                       : black;
+    font-family                 : Segoe UI;
+    font-size                   : 10pt;
+    font-weight                 : normal;
+    width                       : 110;
+    height                      : 20;
+    text-align                  : left;
+}
+
+.AlarmCheckBox {
+    background-color            : #0F0;
+    right                       : 10px;
+}
+
+tr, td {
+    padding                     : 0 0 0 0;
+    margin                      : 0 0 0 0;
+}
+
+.AlarmTable {
+    position                    : absolute;
+    right                       : 10px;
+    top                         : 10px;
+    bottom                      : 10px;
+    left                        : 10px;
+    background          	: #00000000;
+}
+
+#BayListWindow {
+    position                    : absolute;
+    left                        : 5px;
+    top                         : 5px;
+    width                       : 190px;
+    bottom                      : 5px;
+    background-color            : #FF8C00B0;
+}
+
+#BayListWindowHeader {
+    position                    : absolute;
+    left                        : 0px;
+    height                      : 25px;
+    right                       : 0px;
+    background                  : linear-gradient(180deg, #00000020, #00000080);
+    font-weight                 : bold;
+    font-size                   : 14pt;
+    font-family                 : Segoe UI;
+    text-align                  : center;
+    line-height                 : 20px;
+    vertical-align              : middle;
+    border-bottom               : solid 1px #00000040;
+}
+
+#RectifierOutputCurrentSlider {
+    position                    : absolute;
+    width                       : 220;
+    height                      : 20;
+    right                       : 5;
+    top                         : 30;
+}
+
+#CANWindowTable {
+    position                    : absolute;
+    left                        : 0px;
+    right                       : 0px;
+    bottom                      : 0px;
+    top                         : 20px;
+    background                  : antiquewhite;
+    overflow-y                  : auto;
+}
+
+.CANWindowEntry {
+    position                    : absolute;
+    left                        : 0px;
+    right                       : 0px;
+    background                  : #00000010;
+    height                      : 19px;
+    font-family                 : Courier New;
+    font-size                   : 7.5pt;
+    font-weight                 : normal;
+}
+
+.CANWindowEntryIn {
+    color                       : DarkRed;
+}
+
+.CANWindowEntryOut {
+    color                       : DarkGreen;
+    font-weight                 : bold;
+}
+
+
+.ShuntNumberLabel {
+    position:absolute; 
+    left:1em; 
+    top:10px;
+    width:100px; 
+    text-align:right; 
+    font-weight:bold
+}
+
+.ShuntNumber {
+    position:absolute;
+    left:125px;
+    top:10px;
+    width:170px;
+    font-weight:bold;
+    text-align:left
+}
+
+.ShuntCurrentLabel {
+    position:absolute;
+    left:1em;
+    top:30px;
+    width:100px;
+    text-align:right;
+    font-weight:bold
+}
+
+.ShuntCurrent {
+    position:absolute;
+    left:125px;
+    top:30px;
+    width:50px;
+    height:18px;
+}
+
+.ShuntCurrentSlider {
+    position:absolute;
+    left:125px;
+    top:50px;
+    height:18px;
+    width:200px
+}
+
+.ShuntEditSection {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0px;
+    height:80;
+}
+
+.ShuntAlarm {
+    position:absolute; 
+    top:30px; 
+    right:5px
+}
+
+.ShuntAlarmLabel {
+    position:absolute;
+    font-weight:bold;
+    top:30px;
+    left:190px;
+    right:28px;
+    text-align:right;
+}
+
+#OffLineOverlay {
+    position				: absolute;
+    top					: 0px;
+    left				: 0px;
+    bottom				: 0px;
+    right				: 0px;
+    background				: #80000080;
+    z-index:				: 200;
+    visibility				: hidden;
+}

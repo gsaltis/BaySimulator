@@ -1,0 +1,349 @@
+<html>
+  <head>
+    <title>Bay Simulator</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="favicon.ico" rel="shortcut icon">
+    <link href="css/Bay.css" rel="stylesheet">
+    <link href="css/Rectifier.css" rel="stylesheet">
+    <link href="css/DSM.css" rel="stylesheet">
+    
+    <script src="js/Version.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/Contact.js"></script>
+    <script src="js/Rectifier.js"></script>
+    <script src="js/DSM.js"></script>
+    <script src="js/Bay.js"></script>
+    <script src="js/Node.js"></script>
+    <script src="js/websocketif.js"></script>
+    <script src="js/CANWindow.js"></script>
+    
+  </head>
+  <body onload="BodyLoadCB()" onresize="BodyResizeCB()">
+    <div id="FullMenuBar">
+      <div id="MenuBar" class="MenuBar">
+        <div id="FileMenuSection" style="position:absolute; left:0px; width:100px">
+          <div class="MenuEntry" id="MenuReadBay" style="left:00px;" onclick="ReadBayCB();" >Read</div>
+          <div class="MenuEntry" id="MenuSaveBay" style="left:45px;" onclick="SaveBayCB();" >Save</div>
+        </div>
+        <div id="DSMMenuSection" style="position:absolute; left:317px; width:200px">
+          <div class="MenuEntry" id="MenuAddDSM" style="left:0px;" onclick="AddDSMCB();">Add DSM</div>
+          <div class="MenuEntry" id="MenuRemoveDSM" style="left:73px;" onclick="RemoveDSMCB()">Remove DSM</div>
+        </div>
+	<div id="BayMenuSection" style="position:absolute; left:267px; width:200px">
+	  <div class="MenuEntry" style="left:0" onclick="AddBayCB();">Add Bay</div>
+	</div>
+	<div id="HelpMenuSection" style="position:absolute; right:20px; width:200px;">
+	  <div class="MenuEntry"  style="right:10px" onclick="ShowAboutCB();">About</div>
+	</div>
+        <div id="ConnectSection" style="visibility:hidden; position:absolute; right:0px; width:290px; height:20px; top:0px;">
+          <div class="MenuEntry" id="DisconnectButton" style="position:absolute; width:100px; height:19px; cursor:hand" onclick="ConnectRequest();">Disconnected : </div>
+          <input id="HostAddress" style="position:absolute; top:1px; right:20px; width:160px; height:19px" type="text" value="ws://127.0.0.1:8001">
+          <svg style="position:absolute; width:18px; top:1px; bottom:1px; right:0px; cursor:hand" onclick="CANWindowToggle();">
+            <rect fill="white" stroke="black" x="0" y="0" height="17" width="18"></rect>
+            <g id="CANWindowSwitch">
+              <rect id="CANWindowSwitchOff" fill="#666" x="2" y="2" height="13" width="7"></rect>
+              <rect id="CANWindowSwitchOn"  fill="none" x="7" y="2" height="13" width="7"></rect>
+            </g>
+          </svg>
+        </div>
+      </div>
+      
+      <div id="ContactBar">
+        <div class="ContactBarSectionHeader">Breakers</div>
+        <div class="ContactBarSectionHeader" style="left:150px">Fuses</div>
+        <div class="ContactBarSectionHeader" style="left:300px">Bullets</div>
+        <svg id="ContactBarDraw">
+        </svg>
+      </div>
+      <div id="MenuShield" style="position:absolute; left:0px; height:80px; right:295px; top:0px; zIndex:100; background:#00000001">,
+      </div>
+    </div>
+    <div id="MainWindow" class="MainWindow">
+      <div id="AboutBox" style="visibility:hidden; position:absolute; left:100px; top:100px; width:300px; height:140px; background:#444; border:3px solid black; zIndex:110">
+	<div style="position:absolute; left:0px; top:0px; height:20px; right:0px; background:#FFFFFF80; font-family:Segoe UI; font-size;15pt; font-weight:bold; text-align:center; border-bottom:1px solid black">Application Info</div>
+	<p style="position:absolute; left:10px; top:20px; width:120px; height:20px; font-family:Segoe UI; font-weight: bold; font-size: 13pt; text-align:right; color:black">Application : </p>
+	<p id="AboutApplication" style="position:absolute; left:140px; top:20px; right:10px; height:20px; font-family:Segoe UI; font-weight: bold; font-size: 13pt; text-align:left; color:#888">---</p>
+	<p style="position:absolute; left:10px; top:50px; width:120px; height:20px; font-family:Segoe UI; font-weight: bold; font-size: 13pt; text-align:right; color:black">Version : </p>
+	<p id="AboutVersion" style="position:absolute; left:140px; top:50px; right:10px; height:20px; font-family:Segoe UI; font-weight: bold; font-size: 13pt; text-align:left; color:#888">---</p>
+	<button style="position:absolute; width:60px; height:20px; bottom:10px; right:10px; font-weight:bold" onclick="CloseAboutBoxCB();">CLOSE</button>
+      </div>
+      <div id="ShuntCurrentDisplay" style="position:absolute; top:10px; left:10px; width:30px; height:14px; background: #888888C0; border:1px solid #444444C0; font-family:Segoe UI; font-size:8pt; text-align:right; padding-right:2px; visibility:hidden"></div>
+      <div id="BayEditBox" class="BayEditBox">
+        <div style="position:absolute; top:0px; left:0px; right:0px;">
+	  <p style="font-weight:bold; font-family:Arial; font-size:12pt; position:absolute;  padding:0px; margin:0px; top:00px; left:00px; padding-left:10px; right:0px; background:#00000020">Bay</p>
+	  <p style="font-weight:bold; font-family:Arial; font-size:10pt; text-align:right; position:absolute; top:20px; left:0px; width:100px">Type : </p>
+	  <p id="BayEditBoxBayType" style="font-weight:bold; font-family:Arial; font-size:10pt; text-align:left; position:absolute; top:20px; left:104px; width:100px">---</p>
+	</div>
+        <div style="position:absolute; top:60px; left:0px; right:0px;">
+	  <p style="font-weight:bold; font-family:Arial; font-size:12pt; position:absolute;  padding:0px; margin:0px; top:00px; left:00px; padding-left:10px; right:0px; background:#00000020">Rectifiers</p>
+	  <p style="font-weight:bold; font-family:Arial; font-size:10pt; text-align:right; position:absolute; top:20px; left:0px; width:100px">Current : </p>
+	  <input id="BayEditBoxRectCurrent" type="text" style="font-family:Arial; position:absolute; top:30px; left:104px; width:60px" placeholder="Currents"></input>
+	  <button style="left:170px; width:40; height:20; position:absolute; right:10px; top:30px; font-size:9pt; font-weight:bold">Set</button>
+	  <p style="font-weight:bold; font-family:Arial; font-size:10pt; text-align:right; position:absolute; top:50px; left:0px; width:100px">Power : </p>
+	  <input id="BayEditBoxRectPower" type="checkbox" style="font-family:Arial; position:absolute; top:63px; left:102px; right:0px"></input>
+	</div>
+        <div style="position:absolute; top:140px; left:0px; right:0px;">
+	  <p style="font-weight:bold; font-family:Arial; font-size:12pt; position:absolute; top:0px; left:00px; padding-left:10px; right:0px; background:#00000020">DSMs</p>
+	  <p style="font-weight:bold; font-family:Arial; font-size:10pt; text-align:right; position:absolute; top:35px; left:0px; width:100px">Current : </p>
+	  <input id="BayEditBoxDSMCurrent" type="text" style="font-family:Arial; position:absolute; width:60px; top:45px; left:104px; right:0px" placeholder="Currents"></input>
+	  <button style="width:40; height:20; position:absolute; left:170px; right:10px; top:45px; font-size:9pt; font-weight:bold">Set</button>
+	</div>
+      </div>    
+    </div>
+
+    <div id="CANWindow">
+      <div id="CANWindowMenuBar">
+
+        <div class="CANWindowMenuButton" id="CANWindowMenuButtonStart" style="left:5px" onclick="CANMonitorStart()">
+          <svg>
+            <path class="CANWindowMenuButtonDraw" id="CANWindowMenuStartButtonDraw" fill="#00D000"
+                  stroke="#80FF80"
+                  d="M2 2, L18 10 L2 18 Z">
+            </path>
+          </svg>
+        </div>
+
+        <div class="CANWindowMenuButton" id="CANWindowMenuButtonPause" style="left:5px" onclick="CANMonitorPause()">
+          <g class="CANMenuMenuButtonDraw">
+            <svg>
+              <rect id="CANWindowMenuButtonPauseLeft" fill="#E07038"
+                    stroke="#804020"
+                    x="2" y="2" height="14" width="6">
+              </rect>
+              <rect id="CANWindowMenuButtonPauseRight" fill="#E07038"
+                    stroke="#804020"
+                    x="10" y="2" height="14" width="6">
+              </rect>
+            </g>
+          </svg>
+        </div>
+
+        <div class="CANWindowMenuButton" style="left:30px" onclick="CANMonitorStop()">
+          <svg>
+            <path class="CANWindowMenuButtonDraw" id="CANWindowMenuStopButtonDraw" fill="#D00000"
+                  stroke="#F08080"
+                  d="M1 1, L1 17 L17 17 L17 1 Z">
+            </path>
+          </svg>
+        </div>
+        
+        <div class="CANWindowMenuButton" style="left:55px" onclick="CANMonitorClear()">
+          <svg>
+            <circle cx="9" cy="9" r="8"
+                    class="CANWindowMenuButtonDraw" id="CANWindowMenuClearButtonDraw" fill="#D0000000"
+                    stroke="gold" stroke-width="2">
+            </circle>
+            <line   x1="4" y1="4" x2="15" y2="15" 
+                    stroke="gold" stroke-width="2">
+            </line>
+          </svg>
+        </div>
+      </div>
+      <div id ="CANWindowTable">
+      </div>
+    </div>
+    
+    <div id="SubMenuAddBay" style="width:170px; height:44px; visibility:hidden" onmouseleave="SubMenuAddBayHideCB()">
+      <!--<div class="SubMenuEntry" onclick="AddMainBay()">Main Bay</div>-->
+      <div class="SubMenuEntry" style="top:0px" onclick="AddSupplementalBay()">Supplemental Bay</div>
+      <div class="SubMenuEntry" style="top:24px" onclick="AddDistributionBay()">Distribution Only Bay</div>
+    </div>
+
+    <div id="MessageArea" class="MessageArea">
+    </div>
+    <div id="ModeBlock"></div>
+    
+    <!-- Rectifier Edit Dialog Box -->
+    <div id="RectifierEdit">
+      <div id="RectifierEditTitle" class="Title">Rectifier</div>
+
+      <div class="EditLabel" style="top:40px; left:6px">Power :</div>
+      <input id="RectifierActive" class="AlarmCheckBox" type="checkbox" style="position:absolute; left:206px; height:14px; top:41px">
+
+      <div class="EditLabel" style="top:70px; left:6px">Serial Number :</div>
+      <input id="RectifierSerialNumber" class="EditInput" type="text" style="left:211px; top:70px">
+
+      <div class="EditLabel" style="top:100px; left:6px">Product Number :</div>
+      <input id="RectifierProductNumber" class="EditInput" type="text" style="left:211px; top:100px">
+
+      <div class="EditLabel" style="top:70px; right:130px">Customer Text :</div>
+      <input id="RectifierCustomerText" class="EditInput" type="text" style="right:10px; top:70px">
+      
+      <div class="EditLabel" style="top:100px; right:130px">CAN Address :</div>
+      <div id="RectifierCANAddress" class="EditLabel" style="background:white; border:solid 1px #888; width:108px; text-align:left; height:18px; top:100px; right:10px">--</div>
+      
+      <div class="AlarmSection" style="top:130px; bottom:270px; left:330px; right:5px; background:#88888830">
+        <div class="EditLabel" style="width:170px; top:10px">Output Current :</div>
+        <input id="RectifierOutputCurrent" class="EditInput" type="text" style="right:5px; top:10">
+        <input id="RectifierOutputCurrentSlider" type="range" min="0" max="200" value="0" oninput="RectifierOutputCurrentSliderCB()">
+      </div>
+
+      <div class="AlarmSection" style="top:130px; bottom:270px; width:320px; background:#88888830">
+        <div class="EditLabel" style="top:10px">Rated Output Current :</div>
+        <select  style="top:10px; right:5px" id="RectifierRatedCurrentSelect" onchange="RectifierRatedCurrentSelectCB()">
+          <option value="50">50 Amps</option>
+          <option value="65">65 Amps</option>
+          <option value="100">100 Amps</option>
+          <option value="200">200 Amps</option>
+        </select>
+
+        <div class="EditLabel" style="top:40px">Rated Output Voltage :</div>
+        <input id="RectifierRatedOutputVoltage" class="EditInput" type="text" style="right:5px; top:40px">
+        
+        <div class="EditLabel" style="top:70px">Rated Input Voltage :</div>
+        <input id="RectifierRatedInputVoltage" class="EditInput" type="text" style="right:5px; top:70px">
+      </div>
+      
+      <button class="EditBoxButton" onclick="RectifierEditRemoveCB()" style="position:absolute; right:130; bottom:5;user-select:none">Remove</button>
+      <button class="EditBoxButton" onclick="RectifierEditCancelCB()" style="position:absolute; right:55; bottom:5;user-select:none">Cancel</button>
+      <button class="EditBoxButton" onclick="RectifierEditOKCB()" style="position:absolute; right:5; bottom:5;user-select:none;">OK</button>
+      <div id="RectifierAlarmSection" style="right:180px; width:320px">
+        <table class="AlarmTable">
+          <tr>
+            <th class="AlarmLabel AlarmHeading" colspan=4>MAJOR ALARMS</th>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" >AC High Alarm :</td>
+            <td class="AlarmLabel"><input id="RectifierACHAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:45px">AC Low Alarm :</td>
+            <td class="AlarmLabel"><input id="RectifierACLAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:60px">Circuit Breaker Off :</td>
+            <td class="AlarmLabel"><input id="RectifierCBOAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:75px">DV Converter Fail :</td>
+            <td class="AlarmLabel"><input id="RectifierCNVAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:90px">DC Converter Unbalanced :</td>
+            <td class="AlarmLabel"><input id="RectifierDCUAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:105px">DC Convert HVS :</td>
+            <td class="AlarmLabel"><input id="RectifierDHVAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:120px">DC Thermal Shutdown :</td>
+            <td class="AlarmLabel"><input id="RectifierDTSAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:135px">Emergency Stop :</td>
+            <td class="AlarmLabel"><input id="RectifierEMSAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:150px">Fan Fail Major :</td>
+            <td class="AlarmLabel"><input id="RectifierFMAAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:165px">Internal Inhibit :</td>
+            <td class="AlarmLabel"><input id="RectifierINHAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:180px">No Primary Data Stream :</td>
+            <td class="AlarmLabel"><input id="RectifierNPDAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:195px">Phase Lost :</td>
+            <td class="AlarmLabel"><input id="RectifierPHLAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:210px">Power Factor Fail :</td>
+            <td class="AlarmLabel"><input id="RectifierPFFAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:225px">Power Factor HVS :</td>
+            <td class="AlarmLabel"><input id="RectifierPHVAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:240px">Power Factor Thermal Shutdown :</td>
+            <td class="AlarmLabel"><input id="RectifierPTSAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:255px">Remote HVS :</td>
+            <td class="AlarmLabel"><input id="RectifierRHVAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="top:240px">Switch Turned Off :</td>
+            <td class="AlarmLabel"><input id="RectifierSWOAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="top:255px">Duplicate Node :</td>
+            <td class="AlarmLabel"><input id="RectifierDNPAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+        </table>
+      </div>
+      <div id="RectifierAlarmSection" style="left:330px">
+        <table class="AlarmTable">
+          <tr>
+            <th class="AlarmLabel AlarmHeading" colspan=2>MINOR ALARMS</th>
+            <th class="AlarmLabel AlarmHeading" colspan=2>STATUS</th>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" style="width:40%">Fan Fail Minor :</td>
+            <td class="AlarmLabel" style="width:10%"><input id="RectifierFMIAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+            <td class="AlarmLabel" style="width:40%">Alarm Cut off : </td>
+            <td class="AlarmLabel"><input id="RectifierACOStatus" class="AlarmCheckBox" type="Checkbox"></td>
+              
+          </tr>
+          <tr>
+            <td class="AlarmLabel" >High Ambient Temp :</td>
+            <td class="AlarmLabel"><input id="RectifierHATAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" >Thermal Current Limit :</td>
+            <td class="AlarmLabel"><input id="RectifierTCLAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+          <tr>
+            <td class="AlarmLabel" >Sense Loss :</td>
+            <td class="AlarmLabel"><input id="RectifierSNSAlarm" class="AlarmCheckBox" type="Checkbox"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <!-- DSM Edit Dialog -->
+    <div id="DSMEdit" style="position:absolute; top:100px; left:100px; width:300px; height:500px; visibility:hidden; font-size:11pt; font-family:Segoe UI">
+      <div id="DSMEditTitle" class="Title">DSM</div>
+      <div style="position:absolute; text-align:right; font-weight:bold; top:40px; left:5px; width:130px">Serial Number :</div>
+      <input id="DSMSerialNumber" type="text" style="position:absolute; left:145px; top:40px; height:20px; width:150px">
+
+      <div class="EditLabel" style="top:70px; left:5px; width:130px">Product Number :</div>
+      <input id="DSMProductNumber" class="EditInput" type="text" style="position:absolute; left:145px; top:70px; height:20px; width:150px">
+
+      <div class="EditLabel" style="left:5px; top:100px; width:130px">Customer Text :</div>
+      <input id="DSMCustomerText" class="EditInput" type="text" style="position:absolute; left:145px; top:100px; height:20px; width:150px">
+
+      <button class="EditBoxButton" style="position:absolute; left:5px; width:70px; bottom:5px" onclick="RemoveDSM()" >Remove</button>
+      <button class="EditBoxButton" onclick="DSMEditCancelCB()" style="position:absolute; right:55; bottom:5;user-select:none">Cancel</button>
+      <button onclick="DSMEditDismissCB()" class="EditBoxButton" style="user-select: none;position:absolute; right:5; bottom:5">OK</button>
+
+      <svg style="position:absolute; left:5px; top:135px; width:135px; height:240px;"></svg>
+      <p id="DSMEditContactValue1" class="DSMEditContactValue" style="top:120">--</p>
+      <p id="DSMEditContactValue2" class="DSMEditContactValue" style="top:140">--</p>
+      <p id="DSMEditContactValue3" class="DSMEditContactValue" style="top:160">--</p>
+      <p id="DSMEditContactValue4" class="DSMEditContactValue" style="top:180">--</p>
+      <p id="DSMEditContactValue5" class="DSMEditContactValue" style="top:200">--</p>
+      <p id="DSMEditContactValue6" class="DSMEditContactValue" style="top:220">--</p>
+      <p id="DSMEditContactValue7" class="DSMEditContactValue" style="top:240">--</p>
+      <p id="DSMEditContactValue8" class="DSMEditContactValue" style="top:260">--</p>
+      <p id="DSMEditContactValue9" class="DSMEditContactValue" style="top:280">--</p>
+      <p id="DSMEditContactValue10" class="DSMEditContactValue" style="top:300">--</p>
+      <p id="DSMEditContactValue11" class="DSMEditContactValue" style="top:320">--</p>
+      <p id="DSMEditContactValue12" class="DSMEditContactValue" style="top:340">--</p>
+
+      <p id="DSMEditContact1"  class="DSMEditContactLabel">Contact 1 :</p>
+      <p id="DSMEditContact2"  class="DSMEditContactLabel" style="top:140px" >Contact 2 :</p>
+      <p id="DSMEditContact3"  class="DSMEditContactLabel" style="top:160px" >Contact 3 :</p>
+      <p id="DSMEditContact4"  class="DSMEditContactLabel" style="top:180px" >Contact 4 :</p>
+      <p id="DSMEditContact5"  class="DSMEditContactLabel" style="top:200px" >Contact 5 :</p>
+      <p id="DSMEditContact6"  class="DSMEditContactLabel" style="top:220px" >Contact 6 :</p>
+      <p id="DSMEditContact7"  class="DSMEditContactLabel" style="top:240px" >Contact 7 :</p>
+      <p id="DSMEditContact8"  class="DSMEditContactLabel" style="top:260px" >Contact 8 :</p>
+      <p id="DSMEditContact9"  class="DSMEditContactLabel" style="top:280px" >Contact 9 :</p>
+      <p id="DSMEditContact10" class="DSMEditContactLabel" style="top:300px" >Contact 10 :</p>
+      <p id="DSMEditContact11" class="DSMEditContactLabel" style="top:320px" >Contact 11 :</p>
+      <p id="DSMEditContact12" class="DSMEditContactLabel" style="top:340px" >Contact 12 :</p>
+      
+    </div>
+
+    <div id="ShuntEdit" style="position:absolute; left:200px; top:100px; width:333px; height:350px; border:solid thin black; background:#FFFF0020; font-family:Arial; font-size:12pt; visibility:hidden">
+      <div id="ShuntSection1" class="ShuntEditSection">
+        <label id="ShuntNumberLabel1"                 class="ShuntNumberLabel">Contact :</label>
+        <label id="ShuntNumber1"                      class="ShuntNumber">###</label>
+        <label id="ShuntCurrentLabel"                 class="ShuntCurrentLabel">Current :</label>
+        <input id="ShuntCurrent1" type="input"        class="ShuntCurrent"  placeholder="current"></input>
+        <input id="ShuntCurrentSlider1" type="range"  class="ShuntCurrentSlider" min=0 max=200 oninput="ShuntCurrentSliderCB(1)"></input>
+      </div>
+      <button id="ShuntEditRemove"                 style="position:absolute; bottom:5px; right:130px; width:75px; height:20px; background:#80808080" onclick="ShuntEditRemoveCB()">REMOVE</button>
+      <button id="ShuntEditCancel"                 style="position:absolute; bottom:5px; right:55px;  width:65px; height:20px; background:#80808080" onclick="ShuntEditCancelCB()">CANCEL</button>
+      <button id="ShuntEditOK"                     style="position:absolute; bottom:5px; right:5px;   width:40px; height:20px; background:#80808080" onclick="ShuntEditOKCB()">OK</button>
+    </div>
+    <div id="OffLineOverlay"</div>
+  </body>
+</html>
